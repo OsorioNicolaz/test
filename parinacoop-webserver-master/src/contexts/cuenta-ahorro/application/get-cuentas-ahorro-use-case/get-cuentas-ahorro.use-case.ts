@@ -9,7 +9,6 @@ export class GetCuentasAhorroUseCase {
 
   async execute({ run }: { run: number }) {
     const resultado = await this.cuentaAhorroRepository.findByUserRun(run);
-    console.log('REPO resultado:', resultado);
     return resultado;
   }
 }

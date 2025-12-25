@@ -1,3 +1,28 @@
+@if (!optionSelected) {
+  <div class="flex flex-col items-center justify-center gap-6 my-10">
+    <button
+      class="w-80 py-6 text-xl font-semibold rounded-full bg-blue-500 text-white shadow-lg transition hover:bg-blue-600 active:bg-blue-700"
+      (click)="optionSelected = 'ver'"
+    >
+      Ver mis cuentas de ahorro
+    </button>
+    <button
+      class="w-80 py-6 text-xl font-semibold rounded-full bg-green-500 text-white shadow-lg transition hover:bg-green-600 active:bg-green-700"
+      type="button"
+      (click)="mostrarContrato = true"
+    >
+      Crear una cuenta de ahorro
+    </button>
+  </div>
+}
+@if (optionSelected === 'ver') {
+  <button
+  class="mb-6 w-80 py-3 text-lg font-semibold rounded-full bg-blue-400 text-white transition hover:bg-blue-500 active:bg-blue-600"
+  type="button"
+  (click)="optionSelected = null"
+  >
+    ← Volver
+  </button>
 @let savingAccounts = savingAccounts$ | async;
 @let perfil = perfil$ | async;
 
@@ -14,7 +39,7 @@
   } @else {
     <section class="flex w-full max-w-[75rem] flex-col items-center gap-2">
       <h2 class="text-2xl">Mis cuentas de ahorro</h2>
-      <a [routerLink]="['nuevo-aporte-ahorro']" class="flex items-center gap-2 self-end text-primary-600 hover:underline">
+      <a (click)="mostrarContrato = true" class="flex items-center gap-2 self-end text-primary-600 hover:underline">
         <span>Realizar Cuenta de Ahorro</span>
         <app-svg-icon icon="plus" />
       </a>
@@ -22,10 +47,8 @@
         @if (savingAccounts && savingAccounts.length) {
           @for (account of savingAccounts; track account.id) {
             <app-saving-item [account]="account"/>
-            <!-- Ejemplo de pipe personalizado -->
-            <span class="block text-sm text-gray-400">
-              Tipo: {{ account.tipo | tipoAhorro }}
-            </span>
+            
+            
           } @empty {
             <div>No tienes cuentas de ahorro todavía</div>
           }
@@ -36,3 +59,82 @@
     </section>
   }
 </section>
+}
+
+<!-- MODAL DEL CONTRATO -->
+<div *ngIf="mostrarContrato" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+  <div class="bg-cyan-100 rounded-xl shadow-xl max-w-xl w-full p-8 relative">
+    <h2 class="text-2xl font-bold mb-4 text-center">PARINACOOP LTDA.</h2>
+    <h3 class="text-lg text-center text-gray-600 mb-4 font-medium">
+      CONTRATO CUENTA DE AHORRO A PLAZO EN PESOS SIN LIBRETA PARA PERSONAS NATURALES
+      (6 GIROS ANUALES)
+    </h3>
+    <div class="max-h-80 overflow-y-auto mb-6 text-justify border border-gray-300 rounded bg-gray-50 p-4">
+      <!-- El texto del contrato -->
+       Mediante el presente instrumento convenido entre la Cooperativa de Ahorro y Crédito de Arica y Parinacota Limitada. 
+       Por una parte, en adelante también denominada indistintamente Parinacoop Ltda.; 
+       y por la otra titular o contratante firmante al final de este documento. 
+       Se establecen las condiciones del contrato para la apertura de una cuenta de ahorro sin libreta, 
+       la cual se rige por las normas contenidas en el capítulo III.E. 1 y III. E. 4 del compendio de normas financieras del Banco Central de Chile, 
+       y por las disposiciones emanadas por el Departamento de Cooperativas y por las que posteriormente se dicten sobre la materia, 
+       las que deberán entenderse incorporadas en el presente contrato y por las siguiente condiciones generales:
+       <!-- Las clausulas -->
+      <p>
+        <strong>Cláusula Primera:</strong> Cuenta de ahorro sin libreta de Parinacoop Limitada.- Solo para personas naturales.<br/>
+
+        <strong>Cláusula Segunda:</strong> Cuenta de Ahorro con giro diferido que tiene derecho a recibir interés bajo las condiciones más adelante establecidas.<br/>
+
+        <strong>Cláusula Tercera:</strong> Esta cuenta opera sólo en las dependencias de Parinacoop Ltda. en el horario establecido para atención al público.<br/>
+
+        <strong>Cláusula Cuarta: (De los depósitos)</strong> Los depósitos serán en moneda nacional y podrán consistir en dinero en efectivo, 
+            cheques u otros valores emitidos por instituciones financieras y en general, 
+            cualquier tipo de documento que habitualmente se acepte como depósito en una entidad financiera y que permita ser endosado a favor de Parinacoop Limitada.<br/> 
+            Los depósitos distintos de dinero efectivo no constituirán fondos disponibles para el titular, 
+            sino hasta que se haya efectuado el cobro de esos documentos por parte de Parinacoop Ltda. mientras el cobro no se haya realizado, 
+            el abono efectuado a la cuenta de ahorro del titular, tendrá sólo carácter condicional y no devengará intereses, sino hasta que estos fondos se encuentren disponibles. 
+            Del mismo modo el titular de la cuenta no podrá girar con cargo a estos depósitos. El plazo de retención de los fondos será de 3 días hábiles posteriores a la fecha de depósito. 
+            Parinacoop Limitada podrá, durante la vigencia de este contrato y para cada una de las cuentas que se acogen a él, fijar el monto mínimo de depósito, 
+            pudiendo negarse a recibir depósitos por sumas inferiores. Los montos mínimos señalados antes señalados se anunciarán al público mediante avisos destacados en sus oficinas.<br/>
+        
+            <strong>Cláusula Quinta: (De los giros)</strong> El titular podrá girar hasta la totalidad de los fondos disponibles mantenidos. 
+            Para lo cual deberá formalizar su intención con 30 días de anticipación, a través de un aviso escrito. 
+            Si el titular no se presenta a cobrar el giro dentro del tercer día hábil de cumplido el plazo fijado, la solicitud quedará sin efecto.<br/> 
+            No obstante lo señalado anteriormente, Parinacoop Limitada, podrá permitir a los titulares efectuar giros diarios hasta por 30 Unidades de Fomento, 
+            siempre que cada uno de estos giros se efectúe en día hábil distinto al día del depósito y los fondos estén disponibles en la cuenta.<br/> 
+            El máximo de giros anuales permitidos sin perder intereses es de 6.<br/>
+
+        <strong>Cláusula Sexta: (Determinación y pago de interés)</strong> El interés se calculará en base a períodos de 12 meses, 
+            siendo el primer período el comprendido desde la fecha de apertura de la cuenta hasta el último día del duodécimo mes siguiente al mes de apertura y en la fecha de maduración sucesivas. 
+            La tasa de interés anteriormente mencionada será la que se encuentre vigente en el momento de maduración la será anunciada a público mediante aviso destacado en sus oficinas o medios electrónicos.<br/> 
+            El último día hábil del mes en que se cumple cada período de interés, Parinacoop Ltda., abonará en la cuenta el interés que corresponda.<br/> 
+            La tasa de interés a aplicar sobre el monto será la que resulte de dividir la tasa anual por 360 y de multiplicar esta por el número de días de permanencia del depósito o giro.<br/>
+
+        <strong>Cláusula Séptima: (fallecimiento del Titular)</strong> En el caso de que Parinacoop Ltda., 
+            sea informado formalmente (certificado de defunción) del fallecimiento del titular de la cuenta, suspenderá todo giro con cargo a los fondos, 
+            mantenidos en ella, hasta el momento en que la sucesión del fallecido se haga representar en forma legal por mandatario común y 
+            haya satisfecho las demás exigencias establecidas por la Ley.<br/>
+
+        <strong>Cláusula Octava: (Plazo de vigencia y cierre de una cuenta de ahorro)</strong> El presente contrato de ahorro es de plazo indefinido. 
+            No obstante, el titular podrá solicitar el cierre voluntario de su cuenta y en caso de hacerlo antes de la fecha que corresponda abonar los intereses, 
+            perderá el derecho a percibirlos. Asimismo, Parinacoop Ltda., podrá cerrar la cuenta en cualquier momento, si el cliente infringe cualquier cláusula de este contrato, 
+            lo cual será calificado exclusivamente por Parinacoop Ltda.<br/>
+
+        <strong>Cláusula Novena: (Del domicilio)</strong> Para todos los efectos legales que se deriven de este contrato de cuenta de ahorro, 
+            se entiende que el titular tiene domicilio en la ciudad de Arica, correspondiente a la oficina de Parinacoop Ltda. 
+            donde se efectúa la apertura de esta cuenta y se somete a la jurisdicción de sus tribunales.<br/>
+        
+        <strong>Cláusula Décima: (La administración)</strong> La administración de la cuenta de ahorro recae en el titular o 
+        en el caso de un menor de edad en el contratante que haya firmado el contrato de apertura y el titular cuando se tratare de un menor adulto, 
+        pudiendo el contratante limitar la administración de la cuenta a su titular hasta la fecha en que éste alcance la mayoría de edad <strong class="text-xs font-bold">(Art.156 bis Ley General de Bancos).</strong><br/>
+      </p>
+      
+      </div>
+      <p class="mt-8 text-xs text-gray-500">Por favor, lea y acepte el contrato para continuar.</p>
+    
+    <div class="flex justify-end gap-3">
+      <button class="px-4 py-2 rounded bg-gray-400 text-white hover:bg-gray-600" (click)="mostrarContrato = false">Rechazar</button>
+      <button class="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-800 font-bold" (click)="aceptarContrato()">Aceptar</button>
+    </div>
+    <button class="absolute top-3 right-4 text-gray-400 text-xl font-bold" (click)="mostrarContrato = false" aria-label="Cerrar">×</button>
+  </div>
+</div>

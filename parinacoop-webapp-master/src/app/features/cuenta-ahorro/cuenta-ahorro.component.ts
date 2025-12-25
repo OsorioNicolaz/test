@@ -3,18 +3,21 @@ import { Observable, Subject, takeUntil, filter } from 'rxjs';
 import { CuentaAhorroService } from './cuenta-ahorro.service';
 import { AuthService } from '@app/core/auth/services/auth.service';
 import { TipoAhorroPipe } from './pipes/tipo-ahorro.pipe';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, DatePipe, DecimalPipe, CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SvgIconComponent } from '@app/shared/components/svg-icon/svg-icon.component';
 import { CuentaAhorroItemComponent } from './components/cuenta-ahorro-item.component';
 import { ProfileService } from '@features/profile/services/profile.service';
+import { ROUTE_TOKENS } from '@app/route-tokens';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cuenta-ahorro',
   standalone: true,
   imports: [ 
     AsyncPipe,          // aquí van los pipes
-    CurrencyPipe,       
+    CurrencyPipe,
+    CommonModule,       
     RouterLink,         
     SvgIconComponent,
     CuentaAhorroItemComponent,
@@ -30,13 +33,37 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
 
   private onDestroy$ = new Subject<void>();
 
+  mostrarContrato = false; //para contrato
+  public ROUTE_TOKENS = ROUTE_TOKENS;
+
   constructor(
     private cuentaAhorroService: CuentaAhorroService,
     private profileService: ProfileService,
+    private router: Router,
     private authService: AuthService
   ) {
     this.savingTotals$ = this.cuentaAhorroService.totals$;
     this.savingAccounts$ = this.cuentaAhorroService.accounts$;
+  }
+  
+  optionSelected: 'ver' | null = null;
+
+  abrirContrato() {
+    this.mostrarContrato = true;
+  }
+
+  cerrarContrato() {
+    this.mostrarContrato = false;
+  }
+
+  aceptarContrato() {
+    this.mostrarContrato = false;
+    this.router.navigate([
+      '/',
+      ROUTE_TOKENS.CLIENT_PATH,
+      ROUTE_TOKENS.CUENTA_AHORRO,
+      ROUTE_TOKENS.NEW_CUENTA_AHORRO
+    ]);
   }
 
   ngOnInit() {

@@ -9,7 +9,6 @@ export class GetCuentasAhorroController {
   @Get(':run/cuentas-ahorro')
   async run(@Param('run', ParseIntPipe) run: number) {
     const cuentas = await this.getCuentasAhorroUseCase.execute({ run });
-    console.log('RESULTADO cuentas:', cuentas);
     return { cuentas: cuentas.map((x: CuentaAhorro) => x.toValue()) };
   }
 }

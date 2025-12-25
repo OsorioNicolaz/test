@@ -12,6 +12,7 @@ export const ROUTE_TOKENS = {
   PROFILE: 'perfil',
 
   CUENTA_AHORRO: 'cuentas-de-ahorro',
+  NEW_CUENTA_AHORRO: 'nueva-cuenta',
   
   ADMIN_PATH: 'admin',
   ADMIN_HOME: 'inicio',

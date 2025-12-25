@@ -24,9 +24,9 @@ const homeRoutes: Routes = [
         loadComponent: () => import('@features/profile/profile.component'),
       },
       {
-        path: 'cuentas-de-ahorro',
-        loadComponent: () =>
-          import('@features/cuenta-ahorro/cuenta-ahorro.component'),
+        path: ROUTE_TOKENS.CUENTA_AHORRO,
+        loadChildren: () =>
+          import('@features/cuenta-ahorro/cuenta-ahorro.routes'),
       },
       {
         path: 'creditos-de-consumo',

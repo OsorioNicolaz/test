@@ -1,0 +1,23 @@
+<section class="flex flex-col items-center gap-6 p-8">
+  <h2 class="text-2xl font-bold">Crear nueva cuenta de ahorro</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="w-full max-w-md flex flex-col gap-5">
+    <label>
+      Monto inicial:
+      <input type="number" formControlName="monto" class="input" />
+      <span *ngIf="form.get('monto')?.invalid && form.get('monto')?.touched" class="text-red-600 text-xs">
+        Ingrese un monto válido (mín. 1.000)
+      </span>
+    </label>
+    <label>
+      Interés (%):
+      <input type="number" step="0.01" formControlName="interes" class="input" />
+      <span *ngIf="form.get('interes')?.invalid && form.get('interes')?.touched" class="text-red-600 text-xs">
+        Debe ser igual o mayor a 0
+      </span>
+    </label>
+    <!-- Puedes agregar select de tipo o dejarlo oculto si siempre es normal -->
+    <button [disabled]="form.invalid || submitting" type="submit" class="btn btn-primary">
+      Crear cuenta de ahorro
+    </button>
+  </form>
+</section>
