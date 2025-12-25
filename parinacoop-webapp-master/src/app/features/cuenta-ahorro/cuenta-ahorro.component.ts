@@ -7,6 +7,7 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SvgIconComponent } from '@app/shared/components/svg-icon/svg-icon.component';
 import { CuentaAhorroItemComponent } from './components/cuenta-ahorro-item.component';
+import { ProfileService } from '@features/profile/services/profile.service';
 
 @Component({
   selector: 'app-cuenta-ahorro',
@@ -31,6 +32,7 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
 
   constructor(
     private cuentaAhorroService: CuentaAhorroService,
+    private profileService: ProfileService,
     private authService: AuthService
   ) {
     this.savingTotals$ = this.cuentaAhorroService.totals$;
@@ -38,16 +40,14 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.currentUser$
-      .pipe(
-        takeUntil(this.onDestroy$),
-        filter(user => user !== null)
-      )
-      .subscribe(user => {
-        this.perfil$ = this.cuentaAhorroService.getClientProfile(user.run);
-        this.cuentaAhorroService.getAhorroList(user.run); // si necesitas las cuentas de ahorro
-      });
-  }
+  this.authService.currentUser$
+    .pipe(takeUntil(this.onDestroy$), filter(Boolean))
+    .subscribe(user => {
+      this.profileService.getCurrentProfile(user.run);
+      this.perfil$ = this.profileService.userProfile$;
+      this.cuentaAhorroService.getAhorroList(user.run);
+    });
+}
 
   ngOnDestroy() {
     this.onDestroy$.next();
