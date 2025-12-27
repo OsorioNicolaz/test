@@ -10,15 +10,11 @@ export class ContratoController {
   @Post('aceptar')
   async aceptarContrato(@Body() body: AceptarContratoDto, @Req() req: Request) {
     let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
-
     if (Array.isArray(ip)) {
-        ip = ip[0];
+      ip = ip[0];
     }
-
     ip = ip ? ip.toString() : '';
-
     await this.contratoService.aceptarContrato(body.run, ip);
-    
     return { ok: true };
   }
 }

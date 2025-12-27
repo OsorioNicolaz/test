@@ -223,34 +223,41 @@ export const up: Migration['up'] = async (db) => {
   // SAVINGS_ACCOUNT
   // =========================
   await db.schema
-    .createTable('savings_account')
-    .addColumn('id', 'serial', (col) => col.primaryKey())
-    .addColumn('user_run', 'integer', (col) => col.notNull())
-    .addColumn('initial_amount', 'decimal(12, 2)', (col) => col.notNull())
-    .addColumn('currency_type', 'varchar(20)', (col) => col.notNull())
-    .addColumn('interest_rate', 'decimal(7, 4)', (col) => col.notNull())
-    .addColumn('initial_date', 'date', (col) => col.notNull())
-    .addColumn('close_date', 'date')
-    .addColumn('contract_url', 'varchar(255)')
-    .addColumn('contract_hash', 'varchar(128)')
-    .addColumn('contract_signed', 'boolean', (col) =>
-      col.notNull().defaultTo(false),
-    )
-    .addColumn('contract_date', 'date')
-    .addColumn('created_at', 'timestamp', (col) =>
-      col.defaultTo(sql`now()`).notNull(),
-    )
-    .addColumn('updated_at', 'timestamp', (col) =>
-      col.defaultTo(sql`now()`).notNull(),
-    )
-    .addForeignKeyConstraint(
-      'fk_user_savings_account',
-      ['user_run'],
-      'user',
-      ['run'],
-      (cb) => cb.onDelete('cascade'),
-    )
-    .execute();
+  .createTable('savings_account')
+  .addColumn('id', 'serial', (col) => col.primaryKey())
+  .addColumn('user_run', 'integer', (col) => col.notNull())
+  .addColumn('initial_amount', 'decimal(12, 2)', (col) => col.notNull())
+  .addColumn('interest_rate', 'decimal(7, 4)', (col) => col.notNull())
+  .addColumn('initial_date', 'date', (col) => col.notNull())
+  .addColumn('close_date', 'date') 
+  .addColumn('last_withdrawal_at', 'timestamp') // nuevo atributo
+  .addColumn('remaining_withdrawals', 'smallint', (col) => col.notNull().defaultTo(6)) // nuevo atributo
+  .addColumn('created_at', 'timestamp', (col) =>
+    col.defaultTo(sql`now()`).notNull(),
+  )
+  .addColumn('updated_at', 'timestamp', (col) =>
+    col.defaultTo(sql`now()`).notNull(),
+  )
+  .addForeignKeyConstraint(
+    'fk_user_savings_account',
+    ['user_run'],
+    'user',
+    ['run'],
+    (cb) => cb.onDelete('cascade'),
+  )
+  .execute();
+
+  // =========================
+  // CONTRATOS ACEPTADOS
+  // =========================
+  await db.schema
+  .createTable('contratos_aceptados')
+  .addColumn('id', 'serial', (col) => col.primaryKey())
+  .addColumn('run', 'varchar(20)', (col) => col.notNull())
+  .addColumn('fecha_aceptacion', 'timestamp', (col) => col.notNull())
+  .addColumn('ip', 'varchar(45)', (col) => col.notNull())
+  .addUniqueConstraint('unico_contrato_aceptado_por_run', ['run']) // si solo se acepta una vez
+  .execute();
 
   // =========================
   // WITHDRAWAL

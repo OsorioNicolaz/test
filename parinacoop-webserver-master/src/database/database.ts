@@ -9,6 +9,7 @@ import { DapTable } from './tables/dapTable';
 import { ParameterTable } from './tables/parameterTable';
 import { UsuarioTable } from './tables/usuarioTable'; // 👈 nuevo
 import { CuentaAhorroTable } from './tables/cuentaAhorroTable';
+import { ContratosAceptadosTable } from './tables/contratosAceptadosTable';
 
 export interface Tables {
   region: RegionTable;
@@ -21,6 +22,7 @@ export interface Tables {
   dap: DapTable;
   parameter: ParameterTable;
   cuenta_ahorro: CuentaAhorroTable;
+  contratos_aceptados: ContratosAceptadosTable;
 
   // 👇 tu nueva tabla real de usuarios
   usuario: UsuarioTable;
