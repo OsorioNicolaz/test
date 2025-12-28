@@ -2,5 +2,5 @@ import { IsNotEmpty } from 'class-validator';
 
 export class AceptarContratoDto {
   @IsNotEmpty()
-  run!: string;
+  run!: number;
 }

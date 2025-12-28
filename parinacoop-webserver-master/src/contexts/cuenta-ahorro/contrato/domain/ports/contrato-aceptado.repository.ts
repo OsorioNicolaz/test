@@ -1,6 +1,6 @@
-import { ContratoAceptado } from '../../contrato-aceptado.entity';
+
 
 export abstract class ContratoAceptadoRepository {
-  abstract guardarAceptacion(run: string, fecha: Date, ip: string): Promise<void>;
-  // agrega otros métodos si los quieres, ejemplo: getByRun?
+  abstract guardarAceptacion(run: number, fecha: Date, ip: string): Promise<void>;
+  abstract existeAceptacion(run: number): Promise<boolean>;
 }

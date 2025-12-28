@@ -17,6 +17,10 @@ export class CuentaAhorroService {
     return this.http.get(`profile/${run}`);
   }
 
+  usuarioYaAceptoContrato(run: number): Observable<boolean> {
+    return this.http.get<boolean>('contrato/aceptado/' + run);
+  }
+
   getAhorroList(run: number): void {
     this.http.get<{ cuentas: CuentaAhorro[] }>(`clients/${run}/cuentas-ahorro`).subscribe({
       next: (response) => {
@@ -34,5 +38,9 @@ export class CuentaAhorroService {
       return acc;
     }, {total: 0, interests: 0});
     this.totalsSubject.next(totals);
+  }
+
+  aceptarContrato(run: number) {
+    return this.http.post('contrato/aceptar', { run });
   }
 }

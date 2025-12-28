@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, takeUntil, filter } from 'rxjs';
+import { Observable, Subject, takeUntil, filter, take } from 'rxjs';
 import { CuentaAhorroService } from './cuenta-ahorro.service';
 import { AuthService } from '@app/core/auth/services/auth.service';
 import { TipoAhorroPipe } from './pipes/tipo-ahorro.pipe';
@@ -35,6 +35,7 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
 
   mostrarContrato = false; //para contrato
   public ROUTE_TOKENS = ROUTE_TOKENS;
+  contratoAceptado = false
 
   constructor(
     private cuentaAhorroService: CuentaAhorroService,
@@ -49,7 +50,9 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
   optionSelected: 'ver' | null = null;
 
   abrirContrato() {
+  if (!this.contratoAceptado) {
     this.mostrarContrato = true;
+  }
   }
 
   cerrarContrato() {
@@ -57,14 +60,26 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
   }
 
   aceptarContrato() {
-    this.mostrarContrato = false;
-    this.router.navigate([
-      '/',
-      ROUTE_TOKENS.CLIENT_PATH,
-      ROUTE_TOKENS.CUENTA_AHORRO,
-      ROUTE_TOKENS.NEW_CUENTA_AHORRO
-    ]);
-  }
+  this.authService.currentUser$.pipe(
+    filter(Boolean), 
+    take(1)
+  ).subscribe(user => {
+    this.cuentaAhorroService.aceptarContrato(user.run).subscribe({
+      next: () => {
+        this.mostrarContrato = false;
+        this.router.navigate([
+          '/',
+          ROUTE_TOKENS.CLIENT_PATH,
+          ROUTE_TOKENS.CUENTA_AHORRO,
+          ROUTE_TOKENS.NEW_CUENTA_AHORRO
+        ]);
+      },
+      error: (err) => {
+        console.error("No se pudo registrar la aceptación:", err);
+      }
+    });
+  });
+}
 
   ngOnInit() {
   this.authService.currentUser$
@@ -73,6 +88,11 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
       this.profileService.getCurrentProfile(user.run);
       this.perfil$ = this.profileService.userProfile$;
       this.cuentaAhorroService.getAhorroList(user.run);
+
+    this.cuentaAhorroService.usuarioYaAceptoContrato(user.run)
+        .subscribe((respuesta: boolean) => {
+          this.contratoAceptado = respuesta;
+        });
     });
 }
 

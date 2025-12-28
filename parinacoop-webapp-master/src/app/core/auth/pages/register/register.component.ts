@@ -1,64 +1,83 @@
-import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
-
-import { FormGroupTypeBuilder } from '@shared/types';
-import { FormFieldComponent } from '@app/shared/components';
-
-type DataForm = FormGroupTypeBuilder<{
-  run: string;
-  documentNumber: string;
-  email: string;
-  cellphone: string;
-}>;
-
-type PasswordForm = FormGroupTypeBuilder<{
-  password: string;
-  confirmPassword: string;
-  terms: boolean;
-}>;
+import { FormBuilder, Validators, FormControl, FormGroup, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, FormFieldComponent],
   templateUrl: './register.component.html',
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+  ]
 })
 export default class RegisterComponent implements OnInit {
-  dataForm!: DataForm;
-  passwordForm!: PasswordForm;
+  step = 2;
 
-  constructor(private readonly formBuilder: FormBuilder) {}
+  userForm!: FormGroup;
+  addressForm!: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.dataForm = this.formBuilder.group({
+    this.userForm = this.fb.group({
       run: ['', [Validators.required]],
-      documentNumber: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      cellphone: ['', [Validators.required]],
-    });
-
-    this.passwordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
-      terms: [false, [Validators.requiredTrue]],
+    }, { validators: [passwordsMatchValidator] });
+
+    this.addressForm = this.fb.group({
+      street: ['', Validators.required],
+      number: [null, [Validators.required, Validators.min(1)]],
+      commune_id: ['', Validators.required],
+      detail: ['']
     });
   }
 
-  onDataSubmit(): void {
-    console.log(this.dataForm.value);
+  get runCtrl() { return this.userForm.get('run') as FormControl; }
+  get passwordCtrl() { return this.userForm.get('password') as FormControl; }
+  get confirmPasswordCtrl() { return this.userForm.get('confirmPassword') as FormControl; }
+
+  get streetCtrl() { return this.addressForm.get('street') as FormControl; }
+  get numberCtrl() { return this.addressForm.get('number') as FormControl; }
+  get communeCtrl() { return this.addressForm.get('commune_id') as FormControl; }
+  get detailCtrl() { return this.addressForm.get('detail') as FormControl; }
+
+
+
+  onUserDataSubmit() {
+    if (this.userForm.valid) {
+      const { run, password } = this.userForm.value;
+      // Llama a tu servicio para crear el usuario aquí.
+      // El backend debe:
+      //    - asignar roll CLIENT automáticamente
+      //    - guardar password como hash bcrypt
+      this.authService.registrarUsuario(run, password).subscribe(() => {
+        this.step = 2; // Pasa al formulario de dirección
+      });
+    }
   }
 
-  get runCtrl(): FormControl {
-  return this.dataForm.get('run') as FormControl;
+  onAddressSubmit() {
+    if (this.addressForm.valid && this.userForm.value.run) {
+      const data = {
+        ...this.addressForm.value,
+        type_address: 'PRINCIPAL',
+        user_run: this.userForm.value.run
+      };
+      // Llama a tu servicio para guardar dirección aquí.
+      this.authService.agregarDireccion(data).subscribe(() => {
+        // registrar completo, mostrar feedback o ruta final
+      });
+    }
   }
-  get documentNumberCtrl(): FormControl {
-  return this.dataForm.get('documentNumber') as FormControl;
-  }
-  get emailCtrl(): FormControl {
-  return this.dataForm.get('email') as FormControl;
-  }
-  get cellphoneCtrl(): FormControl {
-  return this.dataForm.get('cellphone') as FormControl;
-  }
+}
+
+export function passwordsMatchValidator(form: FormGroup): ValidationErrors | null {
+  const password = form.get('password')?.value;
+  const confirm = form.get('confirmPassword')?.value;
+  return password && confirm && password !== confirm ? { passwordsMismatch: true } : null;
 }

@@ -2,7 +2,7 @@ import { Generated } from 'kysely';
 
 export interface ContratosAceptadosTable {
   id: Generated<number>;
-  run: string;
-  fechaAceptacion: Date;
+  run: number;
+  fecha_aceptacion: Date;
   ip: string;
 }

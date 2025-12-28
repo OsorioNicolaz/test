@@ -57,4 +57,12 @@ export class AuthService {
     this.jwtService.destroyToken();
     this.currentUser = null;
   }
+
+  registrarUsuario(run: string, password: string) {
+    return this.httpClient.post('/api/usuarios/registro', { run, password });
+  }
+
+  agregarDireccion(data: any) {
+    return this.httpClient.post('/api/usuarios/direccion', data);
+  }
 }

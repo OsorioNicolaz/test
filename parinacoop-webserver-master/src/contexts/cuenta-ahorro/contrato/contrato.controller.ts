@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req } from '@nestjs/common';
+import { Controller, Post, Body, Req, Get, Param } from '@nestjs/common';
 import { Request } from 'express';
 import { ContratoService } from './contrato.service';
 import { AceptarContratoDto } from './aceptar-contrato.dto';
@@ -17,4 +17,10 @@ export class ContratoController {
     await this.contratoService.aceptarContrato(body.run, ip);
     return { ok: true };
   }
+
+  @Get('aceptado/:run')
+  async yaAceptoContrato(@Param('run') run: number) {
+    return this.contratoService.yaAceptoContrato(run);
+  }
+
 }

@@ -253,7 +253,7 @@ export const up: Migration['up'] = async (db) => {
   await db.schema
   .createTable('contratos_aceptados')
   .addColumn('id', 'serial', (col) => col.primaryKey())
-  .addColumn('run', 'varchar(20)', (col) => col.notNull())
+  .addColumn('run', 'integer', (col) => col.notNull())
   .addColumn('fecha_aceptacion', 'timestamp', (col) => col.notNull())
   .addColumn('ip', 'varchar(45)', (col) => col.notNull())
   .addUniqueConstraint('unico_contrato_aceptado_por_run', ['run']) // si solo se acepta una vez

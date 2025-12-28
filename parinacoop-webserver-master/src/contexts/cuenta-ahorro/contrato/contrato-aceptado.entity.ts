@@ -1,6 +1,6 @@
 export interface ContratoAceptado {
   id?: number;
-  run: string;
+  run: number;
   fechaAceptacion: Date;
   ip: string;
 }

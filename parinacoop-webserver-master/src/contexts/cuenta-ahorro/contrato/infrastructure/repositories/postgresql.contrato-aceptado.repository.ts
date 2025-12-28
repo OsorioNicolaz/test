@@ -6,10 +6,19 @@ import { ContratoAceptadoRepository } from '../../domain/ports/contrato-aceptado
 export class PostgreSqlContratoAceptadoRepository implements ContratoAceptadoRepository {
   constructor(private db: Database) {}
 
-  async guardarAceptacion(run: string, fecha: Date, ip: string): Promise<void> {
+  async guardarAceptacion(run: number, fecha: Date, ip: string): Promise<void> {
     await this.db
       .insertInto('contratos_aceptados')
-      .values({ run, fechaAceptacion: fecha, ip })
+      .values({ run, fecha_aceptacion: fecha, ip })
       .execute();
   }
+
+  async existeAceptacion(run: number): Promise<boolean> {
+  const existente = await this.db
+    .selectFrom('contratos_aceptados')
+    .select(['id'])
+    .where('run', '=', run)
+    .executeTakeFirst();
+  return !!existente;
+ }
 }
