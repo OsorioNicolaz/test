@@ -5,9 +5,9 @@ import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
   selector: 'app-saving-item',
   standalone: true,
   imports: [
-    CurrencyPipe,  // Ya lo tienes para monto y saldo
-    DatePipe,      // Para | date
-    DecimalPipe,   // Para | number
+    CurrencyPipe,  
+    DatePipe,      
+    DecimalPipe,   
   ],
   template: `
     <div class="rounded border p-3 flex w-full items-center min-h-[60px]">

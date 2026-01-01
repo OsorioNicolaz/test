@@ -4,5 +4,5 @@ export class CuentaAhorro {
   balance!: number;
   interest!: number;
   createdAt!: Date;
-  // se pueden agregar mas
+  // se pueden agregar mas en caso de ser necesario
 }

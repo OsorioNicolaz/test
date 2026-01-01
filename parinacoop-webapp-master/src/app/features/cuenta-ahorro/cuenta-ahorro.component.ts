@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   selector: 'app-cuenta-ahorro',
   standalone: true,
   imports: [ 
-    AsyncPipe,          // aquí van los pipes
+    AsyncPipe,         
     CurrencyPipe,
     CommonModule,       
     RouterLink,         

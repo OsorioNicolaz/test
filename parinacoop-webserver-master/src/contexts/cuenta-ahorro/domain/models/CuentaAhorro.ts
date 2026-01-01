@@ -4,7 +4,7 @@ export interface PrimitiveCuentaAhorro {
   saldo: number;
   tipo: string;
   fecha_apertura: Date;
-  // ...otros campos
+  // otros campos si es necesario
 }
 
 export class CuentaAhorro {

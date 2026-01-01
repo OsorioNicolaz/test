@@ -5,5 +5,5 @@ export interface CuentaAhorroTable {
   saldo: number;
   tipo: string;
   fecha_apertura: Date;
-  // ...otros campos si faltan
+  // otros campos si es necesario
 }

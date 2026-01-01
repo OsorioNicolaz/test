@@ -7,7 +7,7 @@ import { UserSessionTable } from './tables/usersessionTable';
 import { PasswordResetTable } from './tables/passwordresetTable';
 import { DapTable } from './tables/dapTable';
 import { ParameterTable } from './tables/parameterTable';
-import { UsuarioTable } from './tables/usuarioTable'; // 👈 nuevo
+import { UsuarioTable } from './tables/usuarioTable'; 
 import { CuentaAhorroTable } from './tables/cuentaAhorroTable';
 import { ContratosAceptadosTable } from './tables/contratosAceptadosTable';
 
@@ -24,7 +24,7 @@ export interface Tables {
   cuenta_ahorro: CuentaAhorroTable;
   contratos_aceptados: ContratosAceptadosTable;
 
-  // 👇 tu nueva tabla real de usuarios
+  
   usuario: UsuarioTable;
 }
 

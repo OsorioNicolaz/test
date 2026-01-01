@@ -59,10 +59,10 @@ export class AuthService {
   }
 
   registrarUsuario(run: string, password: string) {
-    return this.httpClient.post('/api/usuarios/registro', { run, password });
+    return this.httpClient.post('usuarios/register', { run, password });
   }
 
   agregarDireccion(data: any) {
-    return this.httpClient.post('/api/usuarios/direccion', data);
+    return this.httpClient.post('usuarios/direccion', data);
   }
 }

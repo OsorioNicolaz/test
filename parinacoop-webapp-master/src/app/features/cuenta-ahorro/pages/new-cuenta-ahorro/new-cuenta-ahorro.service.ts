@@ -6,14 +6,14 @@ export interface NuevaCuentaAhorroPayload {
   monto: number;
   interes: number;
   tipo: string;
-  // Agrega otros campos si corresponde
+  // Agrega otros campos si es necesario
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewCuentaAhorroService {
-  private apiUrl = '/api/cuentas-ahorro'; // Cambia esto por tu endpoint real
+  private apiUrl = '/api/cuentas-ahorro'; 
 
   constructor(private http: HttpClient) {}
 

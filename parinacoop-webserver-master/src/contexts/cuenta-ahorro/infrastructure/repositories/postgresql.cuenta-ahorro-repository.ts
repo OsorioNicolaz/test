@@ -17,7 +17,7 @@ export class PostgreSqlCuentaAhorroRepository extends CuentaAhorroRepository {
       .execute();
     result.map(row => new CuentaAhorro({
   id: row.id,
-  userRun: row.user_run, // <--- aquí transformas!
+  userRun: row.user_run, 
   saldo: row.saldo,
   tipo: row.tipo,
   fecha_apertura: row.fecha_apertura

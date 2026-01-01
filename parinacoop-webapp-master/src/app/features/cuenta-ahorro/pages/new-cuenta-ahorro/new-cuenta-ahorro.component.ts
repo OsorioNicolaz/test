@@ -24,9 +24,9 @@ export class NewCuentaAhorroComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      monto: [null, [Validators.required, Validators.min(1000)]], // monto inicial
+      monto: [null, [Validators.required, Validators.min(5000)]], // monto inicial mínimo 5000 CLP
       interes: [null, [Validators.required, Validators.min(0)]],
-      // Otros campos si los pides al usuario, si son automáticos, quítalos
+      // Otros campos si es necesario
       tipo: ['normal'],
     });
   }

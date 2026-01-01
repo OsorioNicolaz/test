@@ -24,7 +24,7 @@ import { ContratoAceptadoRepository } from '../contrato/domain/ports/contrato-ac
         provide: CUENTA_AHORRO_REPO,
         useClass: PostgreSqlCuentaAhorroRepository
     }
-    // otros providers
+    
   ],
   exports: [
     // Si otro módulo necesita este use case/repo se agrega aquí

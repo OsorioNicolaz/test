@@ -11,31 +11,39 @@
       (ngSubmit)="onUserDataSubmit()"
       [formGroup]="userForm"
     >
-      <div class="w-72">
-        <label class="block mb-2">RUN</label>
-        <input type="text" formControlName="run"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
-        <div *ngIf="userForm.get('run')?.invalid && userForm.get('run')?.touched" class="text-xs text-red-400 mt-1">
-          Este campo es obligatorio
-        </div>
-      </div>
-      <div class="w-72">
-        <label class="block mb-2">Contraseña</label>
-        <input type="password" formControlName="password"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
-        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-xs text-red-400 mt-1">
-          Mínimo 8 caracteres
-        </div>
-      </div>
-      <div class="w-72">
-        <label class="block mb-2">Confirmar contraseña</label>
-        <input type="password" formControlName="confirmPassword"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
-        <div *ngIf="userForm.hasError('passwordsMismatch') && userForm.get('confirmPassword')?.touched"
-          class="text-xs text-red-400 mt-1">
-          Las contraseñas deben coincidir
-        </div>
-      </div>
+      <!-- RUN -->
+      <par-form-field
+        label="RUN"
+        format="run"
+        [formCtrl]="fcUser('run')"
+        [errors]="{
+          required: 'Debe ingresar su RUN',
+          runValidator: 'RUN inválido'
+        }"
+      />
+
+      <!-- Clave -->
+      <par-form-field
+        label="Clave"
+        type="password"
+        [formCtrl]="fcUser('password')"
+        [errors]="{
+          required: 'Debe ingresar su clave',
+          minlength: 'Mínimo 8 caracteres'
+        }"
+      />
+
+      <!-- Confirmar clave -->
+      <par-form-field
+        label="Confirmar clave"
+        type="password"
+        [formCtrl]="fcUser('confirmPassword')"
+        [errors]="{
+          required: 'Debe confirmar su clave',
+          passwordsMismatch: 'Las contraseñas deben coincidir'
+        }"
+      />
+
       <button
         class="h-10 w-72 rounded-full bg-primary-500 text-white transition-colors duration-100
         disabled:bg-primary-100 disabled:text-primary-400 hover:bg-primary-600"
@@ -53,38 +61,69 @@
       (ngSubmit)="onAddressSubmit()"
       [formGroup]="addressForm"
     >
+
+      <!-- Calle -->
+      <par-form-field
+        label="Calle"
+        [formCtrl]="fcAddress('street')"
+        [errors]="{
+          required: 'Este campo es obligatorio'
+        }"
+      />
+
+      <!-- Número -->
+      <par-form-field
+        label="Número"
+        type="number"
+        [formCtrl]="fcAddress('number')"
+        [errors]="{
+          required: 'Este campo es obligatorio',
+          min: 'El número debe ser positivo'
+        }"
+      />
+
+      <!-- Región -->
       <div class="w-72">
-        <label class="block mb-2">Calle</label>
-        <input type="text" formControlName="street"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
-        <div *ngIf="addressForm.get('street')?.invalid && addressForm.get('street')?.touched" class="text-xs text-red-400 mt-1">
-          Este campo es obligatorio
+        <label class="block mb-2">Región</label>
+        <select
+          formControlName="region_id"
+          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none"
+          (change)="onRegionChange($event)"
+          required
+        >
+          <option value="" disabled selected>Seleccione una región</option>
+          <option *ngFor="let region of regions" [value]="region.id">
+            {{ region.name }}
+          </option>
+        </select>
+        <div *ngIf="addressForm.get('region_id')?.invalid && addressForm.get('region_id')?.touched" class="text-xs text-red-400 mt-1">
+          Debe seleccionar una región
         </div>
       </div>
-      <div class="w-72">
-        <label class="block mb-2">Número</label>
-        <input type="number" formControlName="number"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
-        <div *ngIf="addressForm.get('number')?.errors?.['min'] && addressForm.get('number')?.touched" class="text-xs text-red-400 mt-1">
-          El número debe ser positivo
-        </div>
-        <div *ngIf="addressForm.get('number')?.errors?.['required'] && addressForm.get('number')?.touched" class="text-xs text-red-400 mt-1">
-          Este campo es obligatorio
-        </div>
-      </div>
+
+      <!-- Comuna -->
       <div class="w-72">
         <label class="block mb-2">Comuna</label>
-        <input type="text" formControlName="commune_id"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
+        <select
+          formControlName="commune_id"
+          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none"
+          required
+        >
+          <option value="" disabled selected>Seleccione una comuna</option>
+          <option *ngFor="let commune of communes" [value]="commune.id">
+            {{ commune.name }}
+          </option>
+        </select>
         <div *ngIf="addressForm.get('commune_id')?.invalid && addressForm.get('commune_id')?.touched" class="text-xs text-red-400 mt-1">
-          Este campo es obligatorio
+          Debe seleccionar una comuna
         </div>
       </div>
-      <div class="w-72">
-        <label class="block mb-2">Detalles (opcional)</label>
-        <input type="text" formControlName="detail"
-          class="w-72 h-12 rounded-md border border-gray-400 bg-[#F6F6F6] px-4 text-base outline-none focus:ring-2 focus:ring-primary-300" />
-      </div>
+
+      <!-- Detalles (opcional, sin errores) -->
+      <par-form-field
+        label="Detalles (opcional)"
+        [formCtrl]="fcAddress('detail')"
+      />
 
       <button
         class="h-10 w-72 rounded-full bg-primary-500 text-white transition-colors duration-100
