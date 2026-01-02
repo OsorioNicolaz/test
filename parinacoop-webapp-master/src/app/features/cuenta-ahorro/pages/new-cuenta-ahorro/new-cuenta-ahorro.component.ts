@@ -1,49 +1,44 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NewCuentaAhorroService } from './new-cuenta-ahorro.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { SolicitudService } from './service/solicitud.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-new-cuenta-ahorro',
-  standalone: true,
   templateUrl: './new-cuenta-ahorro.component.html',
-  imports: [ 
+  standalone: true,
+  imports: [
     ReactiveFormsModule,
-    CommonModule,
-  ]
+    NgIf,
+  ],
 })
-export class NewCuentaAhorroComponent {
-  form: FormGroup;
-  submitting = false;
+export class NewCuentaAhorroComponent implements OnInit {
+  form!: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private newCuentaAhorroService: NewCuentaAhorroService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private solicitudService: SolicitudService) {}
+
+  ngOnInit() {
     this.form = this.fb.group({
-      monto: [null, [Validators.required, Validators.min(5000)]], // monto inicial mínimo 5000 CLP
-      interes: [null, [Validators.required, Validators.min(0)]],
-      // Otros campos si es necesario
-      tipo: ['normal'],
+      initial_amount: ['', [Validators.required, Validators.min(1)]],
+      birth_date: ['', Validators.required],
+      sex: ['', Validators.required],
+      department: [''],
+      block_condo: [''],
+      city: ['', Validators.required],
+      nationality: ['', Validators.required],
+      education: ['', Validators.required],
+      occupation: ['', Validators.required],
+      marital_status: ['', Validators.required]
     });
   }
 
   submit() {
-  if (this.form.invalid) return;
-  this.submitting = true;
-  this.newCuentaAhorroService.createCuentaAhorro(this.form.value)
-    .subscribe({
-      next: () => {
-        this.submitting = false;
-        // Éxito: redirige o muestra mensaje
-      },
-      error: () => {
-        this.submitting = false;
-        // Muestra error
-      }
-    });
+    if (this.form.valid) {
+      this.solicitudService.enviarSolicitud(this.form.value).subscribe(
+        () => alert('¡Solicitud enviada! La empresa gestionará la apertura de tu cuenta.'),
+        error => alert('Hubo un error al enviar la solicitud.')
+      );
     }
+  }
 }

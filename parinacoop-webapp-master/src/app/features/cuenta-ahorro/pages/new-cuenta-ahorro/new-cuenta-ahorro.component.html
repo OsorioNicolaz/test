@@ -1,23 +1,48 @@
-<section class="flex flex-col items-center gap-6 p-8">
-  <h2 class="text-2xl font-bold">Crear nueva cuenta de ahorro</h2>
-  <form [formGroup]="form" (ngSubmit)="submit()" class="w-full max-w-md flex flex-col gap-5">
-    <label>
-      Monto inicial:
-      <input type="number" formControlName="monto" class="input" />
-      <span *ngIf="form.get('monto')?.invalid && form.get('monto')?.touched" class="text-red-600 text-xs">
-        Ingrese un monto válido (mín. 1.000)
-      </span>
-    </label>
-    <label>
-      Interés (%):
-      <input type="number" step="0.01" formControlName="interes" class="input" />
-      <span *ngIf="form.get('interes')?.invalid && form.get('interes')?.touched" class="text-red-600 text-xs">
-        Debe ser igual o mayor a 0
-      </span>
-    </label>
-    <!-- Puedes agregar select de tipo o dejarlo oculto si siempre es normal -->
-    <button [disabled]="form.invalid || submitting" type="submit" class="btn btn-primary">
-      Crear cuenta de ahorro
-    </button>
-  </form>
-</section>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>Monto</label>
+  <input formControlName="initial_amount" type="number" min="1" required>
+  <div *ngIf="form.get('initial_amount')?.invalid && form.get('initial_amount')?.touched">
+    Monto obligatorio y debe ser mayor a 0
+  </div>
+
+  <label>Fecha de nacimiento</label>
+  <input formControlName="birth_date" type="date" required>
+  
+  <label>Sexo</label>
+  <select formControlName="sex" required>
+    <option value="">Seleccione</option>
+    <option value="Femenino">Femenino</option>
+    <option value="Masculino">Masculino</option>
+    <option value="Otro">Otro</option>
+  </select>
+  
+  <label>Departamento (opcional)</label>
+  <input formControlName="department" type="text">
+  
+  <label>Block/Condominio (opcional)</label>
+  <input formControlName="block_condo" type="text">
+  
+  <label>Ciudad</label>
+  <input formControlName="city" type="text" required>
+  
+  <label>Nacionalidad</label>
+  <input formControlName="nationality" type="text" required>
+
+  <label>Estudios</label>
+  <input formControlName="education" type="text" required>
+
+  <label>Profesión/Actividad</label>
+  <input formControlName="occupation" type="text" required>
+  
+  <label>Estado Civil</label>
+  <select formControlName="marital_status" required>
+    <option value="">Seleccione</option>
+    <option value="Soltero">Soltero</option>
+    <option value="Casado">Casado</option>
+    <option value="Separado">Separado</option>
+    <option value="Viudo">Viudo</option>
+    <option value="Otro">Otro</option>
+  </select>
+
+  <button type="submit" [disabled]="form.invalid">Crear cuenta de ahorro</button>
+</form>
