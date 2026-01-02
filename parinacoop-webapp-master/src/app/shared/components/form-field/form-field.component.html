@@ -5,7 +5,7 @@
   }"
   hideRequiredMarker
 >
-  <mat-label>{{ label }}</mat-label>
+  <mat-label>{{ label ? label : '' }}</mat-label>
   <input
     [type]="type"
     matInput

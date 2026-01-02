@@ -29,14 +29,18 @@ export class PostgreSqlUserRepository implements UserRepository {
 
   async create(user: User): Promise<User> {
     const { run, role, password, address, profile } = user.toValue();
-    await this.db
+      await this.db
       .insertInto('user')
       .values({
         run,
         role,
         password: password!,
+        password_attempts: 3,
+        enabled: true,
+        created_at: new Date(),
+        updated_at: new Date(),
       })
-      .executeTakeFirstOrThrow();
+    .executeTakeFirstOrThrow();
 
     const userClient = new User({ run, role });
 

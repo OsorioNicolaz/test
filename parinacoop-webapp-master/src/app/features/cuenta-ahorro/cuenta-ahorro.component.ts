@@ -16,12 +16,10 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [ 
     AsyncPipe,         
-    CurrencyPipe,
     CommonModule,       
     RouterLink,         
     SvgIconComponent,
     CuentaAhorroItemComponent,
-    TipoAhorroPipe,  
    ],
   templateUrl: './cuenta-ahorro.component.html',
 })

@@ -7,13 +7,14 @@
     <!-- PASO 1: RUN Y CLAVE -->
     <form
       *ngIf="step === 1"
-      class="flex flex-col items-center justify-center gap-5"
+      class="flex flex-col items-center justify-center gap-3"
       (ngSubmit)="onUserDataSubmit()"
       [formGroup]="userForm"
     >
       <!-- RUN -->
+      <label class="block mb-0">RUN</label>
       <par-form-field
-        label="RUN"
+        
         format="run"
         [formCtrl]="fcUser('run')"
         [errors]="{
@@ -23,8 +24,9 @@
       />
 
       <!-- Clave -->
+      <label class="block mb-0">Clave</label>
       <par-form-field
-        label="Clave"
+        
         type="password"
         [formCtrl]="fcUser('password')"
         [errors]="{
@@ -34,8 +36,9 @@
       />
 
       <!-- Confirmar clave -->
+       <label class="block mb-0">Confirmar clave</label>
       <par-form-field
-        label="Confirmar clave"
+        
         type="password"
         [formCtrl]="fcUser('confirmPassword')"
         [errors]="{
@@ -63,8 +66,9 @@
     >
 
       <!-- Calle -->
+       <label class="block mb-2">Calle</label>
       <par-form-field
-        label="Calle"
+        
         [formCtrl]="fcAddress('street')"
         [errors]="{
           required: 'Este campo es obligatorio'
@@ -72,8 +76,9 @@
       />
 
       <!-- Número -->
+       <label class="block mb-2">Número de calle</label>
       <par-form-field
-        label="Número"
+        
         type="number"
         [formCtrl]="fcAddress('number')"
         [errors]="{
