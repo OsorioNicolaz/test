@@ -14,6 +14,13 @@
     >
       Crear una cuenta de ahorro
     </button>
+    <button
+      class="w-80 py-6 text-xl font-semibold rounded-full bg-green-500 text-white shadow-lg transition hover:bg-green-600 active:bg-green-700"
+      [routerLink]="[ROUTE_TOKENS.NEW_CUENTA_AHORRO]"
+      type="button"
+    >
+      Crear una cuenta de ahorro
+    </button>
   </div>
 }
 @if (optionSelected === 'ver') {
@@ -45,16 +52,14 @@
         <app-svg-icon icon="plus" />
         </a>
       <div class="flex w-full flex-col gap-5 text-center">
-        @if (savingAccounts && savingAccounts.length) {
+        @if (savingAccounts === null || savingAccounts === undefined) {
+          <div>cargando</div>
+        } @else if (savingAccounts.length === 0) {
+          <div>No tienes cuentas de ahorro todavía</div>
+        } @else {
           @for (account of savingAccounts; track account.id) {
             <app-saving-item [account]="account"/>
-            
-            
-          } @empty {
-            <div>No tienes cuentas de ahorro todavía</div>
           }
-        } @else {
-          <div>cargando</div>
         }
       </div>
     </section>

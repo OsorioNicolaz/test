@@ -1,4 +1,4 @@
-import { CuentaAhorro } from '../models/CuentaAhorro';
+import { SavingsAccount } from '../models/CuentaAhorro';
 
 export const CUENTA_AHORRO_REPO = 'CUENTA_AHORRO_REPO';
 

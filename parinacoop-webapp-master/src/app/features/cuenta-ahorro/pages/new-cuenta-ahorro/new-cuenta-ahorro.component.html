@@ -1,48 +1,101 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <label>Monto</label>
-  <input formControlName="initial_amount" type="number" min="1" required>
-  <div *ngIf="form.get('initial_amount')?.invalid && form.get('initial_amount')?.touched">
-    Monto obligatorio y debe ser mayor a 0
+<button
+  class="mb-6 w-80 py-3 text-lg font-semibold rounded-full bg-blue-400 text-white transition hover:bg-blue-500 active:bg-blue-600"
+  type="button"
+  (click)="volver()"
+  >
+    ← Volver
+  </button>
+<section class="flex flex-col gap-5  w-full">
+
+  <!-- Card/Formulario centrado -->
+  <div class="flex flex-col items-center justify-center gap-5 rounded-xl bg-[#F6F6F6] px-10 py-5 w-full max-w-lg mx-auto">
+    <h1 class="w-80 text-pretty text-center text-2xl font-bold mb-2">
+      Crear cuenta de ahorro en Parinacoop
+    </h1>
+    <form class="flex flex-col items-center justify-center gap-4 w-full" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="w-full">
+        <label class="block mb-1">Monto</label>
+        <input formControlName="initial_amount" type="number" min="5000" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+        <div *ngIf="form.get('initial_amount')?.invalid && form.get('initial_amount')?.touched"
+          class="text-xs text-red-400 mt-1">Monto obligatorio y debe ser mayor a 5000</div>
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Fecha de nacimiento</label>
+        <input formControlName="birth_date" type="date" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Sexo</label>
+        <select formControlName="sex" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400">
+          <option value="">Seleccione</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Departamento (opcional)</label>
+        <input formControlName="department" type="text"
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Block/Condominio (opcional)</label>
+        <input formControlName="block_condo" type="text"
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Ciudad</label>
+        <input formControlName="city" type="text" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Nacionalidad</label>
+        <input formControlName="nationality" type="text" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Estudios</label>
+        <input formControlName="education" type="text" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Profesión/Actividad</label>
+        <input formControlName="occupation" type="text" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-1">Estado Civil</label>
+        <select formControlName="marital_status" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400">
+          <option value="">Seleccione</option>
+          <option value="Soltero">Soltero</option>
+          <option value="Casado">Casado</option>
+          <option value="Separado">Separado</option>
+          <option value="Viudo">Viudo</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <button
+        type="submit"
+        class="h-10 w-72 rounded-full bg-primary-500 text-white transition-colors duration-100
+          disabled:bg-primary-100 disabled:text-primary-400 hover:bg-primary-600 mt-4"
+        [disabled]="form.invalid"
+      >
+        Crear cuenta de ahorro
+      </button>
+    </form>
   </div>
-
-  <label>Fecha de nacimiento</label>
-  <input formControlName="birth_date" type="date" required>
   
-  <label>Sexo</label>
-  <select formControlName="sex" required>
-    <option value="">Seleccione</option>
-    <option value="Femenino">Femenino</option>
-    <option value="Masculino">Masculino</option>
-    <option value="Otro">Otro</option>
-  </select>
-  
-  <label>Departamento (opcional)</label>
-  <input formControlName="department" type="text">
-  
-  <label>Block/Condominio (opcional)</label>
-  <input formControlName="block_condo" type="text">
-  
-  <label>Ciudad</label>
-  <input formControlName="city" type="text" required>
-  
-  <label>Nacionalidad</label>
-  <input formControlName="nationality" type="text" required>
-
-  <label>Estudios</label>
-  <input formControlName="education" type="text" required>
-
-  <label>Profesión/Actividad</label>
-  <input formControlName="occupation" type="text" required>
-  
-  <label>Estado Civil</label>
-  <select formControlName="marital_status" required>
-    <option value="">Seleccione</option>
-    <option value="Soltero">Soltero</option>
-    <option value="Casado">Casado</option>
-    <option value="Separado">Separado</option>
-    <option value="Viudo">Viudo</option>
-    <option value="Otro">Otro</option>
-  </select>
-
-  <button type="submit" [disabled]="form.invalid">Crear cuenta de ahorro</button>
-</form>
+</section>

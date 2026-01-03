@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SolicitudService } from './service/solicitud.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-cuenta-ahorro',
@@ -16,11 +17,15 @@ import { NgIf } from '@angular/common';
 export class NewCuentaAhorroComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private solicitudService: SolicitudService) {}
+   constructor(private router: Router, private fb: FormBuilder, private solicitudService: SolicitudService) {}
+
+   volver() {
+    this.router.navigate(['/','cliente','cuentas-de-ahorro']);
+    }
 
   ngOnInit() {
     this.form = this.fb.group({
-      initial_amount: ['', [Validators.required, Validators.min(1)]],
+      initial_amount: ['', [Validators.required, Validators.min(5000)]],
       birth_date: ['', Validators.required],
       sex: ['', Validators.required],
       department: [''],
