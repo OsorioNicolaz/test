@@ -17,19 +17,11 @@ import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
       </div>
       <div class="flex-1 flex flex-col items-center">
         <div class="font-bold">Monto inicial</div>
-        <div>{{ account.monto | currency:'CLP':'symbol' }}</div>
-      </div>
-      <div class="flex-1 flex flex-col items-center">
-        <div class="font-bold">Saldo actual</div>
-        <div>{{ account.saldo_actual | currency:'CLP':'symbol' }}</div>
-      </div>
-      <div class="flex-1 flex flex-col items-center">
-        <div class="font-bold">Interés</div>
-        <div>{{ account.interes }}%</div>
+        <div>{{ account.initialAmount | currency:'CLP':'symbol' }}</div>
       </div>
       <div class="flex-1 flex flex-col items-center">
         <div class="font-bold">Fecha apertura</div>
-        <div>{{ account.fecha_apertura | date:'dd-MM-yyyy' }}</div>
+        <div>{{ account.initialDate | date:'dd-MM-yyyy' }}</div>
       </div>
     </div>
   `

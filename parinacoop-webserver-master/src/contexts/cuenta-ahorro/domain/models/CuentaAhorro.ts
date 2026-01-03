@@ -1,15 +1,27 @@
-export interface PrimitiveCuentaAhorro {
+export interface PrimitiveSavingsAccount {
   id: number;
   userRun: number;
-  saldo: number;
-  tipo: string;
-  fecha_apertura: Date;
-  // otros campos si es necesario
+  initialAmount: number;
+  initialDate: Date | null;
+  closeDate: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  lastWithdrawalAt: Date | null;
+  remainingWithdrawals: number | null;
+  birthDate: Date | null;
+  sex: string | null;
+  department: string | null;
+  blockCondo: string | null;
+  city: string | null;
+  nationality: string | null;
+  education: string | null;
+  occupation: string | null;
+  maritalStatus: string | null;
 }
 
-export class CuentaAhorro {
-  constructor(private attributes: PrimitiveCuentaAhorro) {}
-  toValue(): PrimitiveCuentaAhorro {
+export class SavingsAccount {
+  constructor(private attributes: PrimitiveSavingsAccount) {}
+  toValue(): PrimitiveSavingsAccount {
     return this.attributes;
   }
 }

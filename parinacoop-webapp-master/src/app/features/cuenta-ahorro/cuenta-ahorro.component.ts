@@ -25,7 +25,6 @@ import { Router } from '@angular/router';
 })
 
 export default class CuentaAhorroComponent implements OnInit, OnDestroy {
-  savingTotals$: Observable<{ total: number; interests: number }>;
   savingAccounts$: Observable<any[]>;
   perfil$!: Observable<any>;
 
@@ -41,7 +40,6 @@ export default class CuentaAhorroComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService
   ) {
-    this.savingTotals$ = this.cuentaAhorroService.totals$;
     this.savingAccounts$ = this.cuentaAhorroService.accounts$;
   }
   

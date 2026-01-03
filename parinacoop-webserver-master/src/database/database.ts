@@ -8,7 +8,7 @@ import { PasswordResetTable } from './tables/passwordresetTable';
 import { DapTable } from './tables/dapTable';
 import { ParameterTable } from './tables/parameterTable';
 import { UsuarioTable } from './tables/usuarioTable'; 
-import { CuentaAhorroTable } from './tables/cuentaAhorroTable';
+import { SavingsAccountTable } from './tables/savingsAccountTable';
 import { ContratosAceptadosTable } from './tables/contratosAceptadosTable';
 
 export interface Tables {
@@ -21,7 +21,7 @@ export interface Tables {
   password_reset: PasswordResetTable;
   dap: DapTable;
   parameter: ParameterTable;
-  cuenta_ahorro: CuentaAhorroTable;
+  savings_account: SavingsAccountTable;
   contratos_aceptados: ContratosAceptadosTable;
 
   
