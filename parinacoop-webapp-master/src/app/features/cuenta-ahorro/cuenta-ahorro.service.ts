@@ -21,6 +21,7 @@ export class CuentaAhorroService {
   getAhorroList(run: number): void {
   this.http.get<{ cuentas: any[] }>(`clients/${run}/cuentas-ahorro`).subscribe({
     next: (response) => {
+      console.log('Respuesta desde backend:', response.cuentas);
       const mappedCuentas = response.cuentas.map(row => ({
         id: row.id,
         userRun: row.user_run,
