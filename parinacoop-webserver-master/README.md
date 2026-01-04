@@ -50,6 +50,14 @@ DB_USER=postgres
 DB_PASSWORD=tu_contraseña      # Contraseña de la base de datos
 DB_NAME=nombre_de_tu_base      # Nombre de la base de datos
 ```
+## Migration
+
+Before running the project, yout need to migrate the database for that you need to do:
+
+```bash
+# to migrate the database
+$ pnpm run migrate
+```
 
 
 ## Compile and run the project
