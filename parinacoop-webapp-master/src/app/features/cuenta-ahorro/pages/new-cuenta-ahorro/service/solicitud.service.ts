@@ -3,16 +3,18 @@ import { HttpClient } from '@angular/common/http';
 
 
 export interface SolicitudCuentaAhorroPayload {
+  user_id: number;
   initial_amount: number;
   birth_date: string;
   sex: string;
-  department?: string;
+  department?: number;
   block_condo?: string;
   city: string;
   nationality: string;
   education: string;
   occupation: string;
   marital_status: string;
+  status?: 'pendiente' | 'creada' | 'rechazada';
 }
 
 
@@ -21,6 +23,6 @@ export class SolicitudService {
   constructor(private http: HttpClient) {}
 
   enviarSolicitud(datos: SolicitudCuentaAhorroPayload) {
-    return this.http.post('/api/savings-requests', datos);
+    return this.http.post('savings-account', datos);
   }
 }

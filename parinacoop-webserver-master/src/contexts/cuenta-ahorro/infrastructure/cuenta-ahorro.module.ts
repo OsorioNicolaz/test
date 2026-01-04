@@ -7,8 +7,12 @@ import { ContratoController } from '../contrato/contrato.controller';
 import { ContratoService } from '../contrato/contrato.service';
 import { PostgreSqlContratoAceptadoRepository } from '../contrato/infrastructure/repositories/postgresql.contrato-aceptado.repository';
 import { ContratoAceptadoRepository } from '../contrato/domain/ports/contrato-aceptado.repository';
+import { NewCuentaAhorroModule } from '../new-cuenta-ahorro/new-cuenta-ahorro.module';
 
 @Module({
+  imports: [
+    NewCuentaAhorroModule, // <- Agrega aquí tu módulo de creación
+  ],
   controllers: [
     GetCuentasAhorroController,
     ContratoController,

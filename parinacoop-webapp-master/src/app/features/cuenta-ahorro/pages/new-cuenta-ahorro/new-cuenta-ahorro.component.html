@@ -39,14 +39,14 @@
       </div>
 
       <div class="w-full">
-        <label class="block mb-1">Departamento (opcional)</label>
-        <input formControlName="department" type="text"
+        <label class="block mb-1">Numero de Departamento (opcional)</label>
+        <input formControlName="department" type="number"
           class="w-full rounded-md border px-4 py-2 border-gray-400" />
       </div>
 
       <div class="w-full">
-        <label class="block mb-1">Block/Condominio (opcional)</label>
-        <input formControlName="block_condo" type="text"
+        <label class="block mb-1">Block. Población/Condominio (opcional)</label>
+        <input formControlName="block_condo" type="text" placeholder="Ej: Block B Condominio Los Álamos"
           class="w-full rounded-md border px-4 py-2 border-gray-400" />
       </div>
 
@@ -63,9 +63,15 @@
       </div>
 
       <div class="w-full">
-        <label class="block mb-1">Estudios</label>
-        <input formControlName="education" type="text" required
-          class="w-full rounded-md border px-4 py-2 border-gray-400" />
+        <label class="block mb-1">Nivel de Educación</label>        
+        <select formControlName="education" required
+          class="w-full rounded-md border px-4 py-2 border-gray-400">
+          <option value="">Seleccione</option>
+          <option value="Educación Básica">Educación Básica</option>
+          <option value="Educación Media">Educación Media</option>
+          <option value="Educación Superior">Educación Superior</option>
+          <option value="Postgrado">Postgrado</option>
+        </select>
       </div>
 
       <div class="w-full">

@@ -4,6 +4,7 @@ import { SolicitudService } from './service/solicitud.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/core/auth/services/auth.service';
 
 @Component({
   selector: 'app-new-cuenta-ahorro',
@@ -17,7 +18,12 @@ import { Router } from '@angular/router';
 export class NewCuentaAhorroComponent implements OnInit {
   form!: FormGroup;
 
-   constructor(private router: Router, private fb: FormBuilder, private solicitudService: SolicitudService) {}
+   constructor(
+    private router: Router, 
+    private fb: FormBuilder, 
+    private solicitudService: SolicitudService,
+    private authService: AuthService,
+  ) {}
 
    volver() {
     this.router.navigate(['/','cliente','cuentas-de-ahorro']);
@@ -40,8 +46,17 @@ export class NewCuentaAhorroComponent implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      this.solicitudService.enviarSolicitud(this.form.value).subscribe(
-        () => alert('¡Solicitud enviada! La empresa gestionará la apertura de tu cuenta.'),
+      const run = this.authService.run;
+      if (!run) {
+        alert('No se encontró un run válido, por favor reautentícate.');
+        return;
+      }
+      const data = {
+        ...this.form.value,
+        user_run: run
+      };
+      this.solicitudService.enviarSolicitud(data).subscribe(
+        () => alert('Solicitud enviada!'),
         error => alert('Hubo un error al enviar la solicitud.')
       );
     }

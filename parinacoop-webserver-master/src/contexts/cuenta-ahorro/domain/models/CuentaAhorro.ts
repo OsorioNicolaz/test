@@ -10,7 +10,7 @@ export interface PrimitiveSavingsAccount {
   remainingWithdrawals: number | null;
   birthDate: Date | null;
   sex: string | null;
-  department: string | null;
+  department: number | null;
   blockCondo: string | null;
   city: string | null;
   nationality: string | null;

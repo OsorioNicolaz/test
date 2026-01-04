@@ -222,30 +222,47 @@ export const up: Migration['up'] = async (db) => {
   // =========================
   // SAVINGS_ACCOUNT
   // =========================
+  // 1. Crear el tipo ENUM primero
+  await sql`
+    DO $$
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'savings_account_status') THEN
+        CREATE TYPE savings_account_status AS ENUM ('pendiente', 'aprobada', 'cerrada');
+      END IF;
+    END $$;
+  `.execute(db);
+
+  // 2. Ahora crea la tabla usando ese tipo ENUM
   await db.schema
-  .createTable('savings_account')
-  .addColumn('id', 'serial', (col) => col.primaryKey())
-  .addColumn('user_run', 'integer', (col) => col.notNull())
-  .addColumn('initial_amount', 'decimal(12, 2)', (col) => col.notNull())
-  .addColumn('interest_rate', 'decimal(7, 4)', (col) => col.notNull())
-  .addColumn('initial_date', 'date', (col) => col.notNull())
-  .addColumn('close_date', 'date') 
-  .addColumn('last_withdrawal_at', 'timestamp') // nuevo atributo
-  .addColumn('remaining_withdrawals', 'smallint', (col) => col.notNull().defaultTo(6)) // nuevo atributo
-  .addColumn('created_at', 'timestamp', (col) =>
-    col.defaultTo(sql`now()`).notNull(),
-  )
-  .addColumn('updated_at', 'timestamp', (col) =>
-    col.defaultTo(sql`now()`).notNull(),
-  )
-  .addForeignKeyConstraint(
-    'fk_user_savings_account',
-    ['user_run'],
-    'user',
-    ['run'],
-    (cb) => cb.onDelete('cascade'),
-  )
-  .execute();
+    .createTable('savings_account')
+    .addColumn('id', 'serial', (col) => col.primaryKey())
+    .addColumn('user_run', 'integer', (col) => col.notNull())
+    .addColumn('initial_amount', 'decimal(12, 2)', (col) => col.notNull())
+    .addColumn('interest_rate', 'decimal(7, 4)', (col) => col.notNull())
+    .addColumn('initial_date', 'date', (col) => col.notNull())
+    .addColumn('close_date', 'date')
+    .addColumn('last_withdrawal_at', 'timestamp')
+    .addColumn('remaining_withdrawals', 'smallint', (col) => col.notNull().defaultTo(6))
+    .addColumn('created_at', 'timestamp', (col) => col.defaultTo(sql`now()`).notNull())
+    .addColumn('updated_at', 'timestamp', (col) => col.defaultTo(sql`now()`).notNull())
+    .addColumn('birth_date', 'date')
+    .addColumn('sex', 'varchar(20)')
+    .addColumn('department', 'integer')
+    .addColumn('block_condo', 'varchar(100)')
+    .addColumn('city', 'varchar(50)')
+    .addColumn('nationality', 'varchar(50)')
+    .addColumn('education', 'varchar(100)')
+    .addColumn('occupation', 'varchar(100)')
+    .addColumn('marital_status', 'varchar(30)')
+    .addColumn('status', sql`"savings_account_status"`, col => col.defaultTo('pendiente'))
+    .addForeignKeyConstraint(
+      'fk_user_savings_account',
+      ['user_run'],
+      'user',
+      ['run'],
+      (cb) => cb.onDelete('cascade'),
+    )
+    .execute();
 
   // =========================
   // CONTRATOS ACEPTADOS

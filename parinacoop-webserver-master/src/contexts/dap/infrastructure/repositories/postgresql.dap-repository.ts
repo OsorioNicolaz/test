@@ -30,7 +30,7 @@ export class PostgreSqlDapRepository implements DapRepository {
       })
       .returning(['id'])
       .executeTakeFirstOrThrow();
-      console.log('Resultado del INSERT:', result);
+      
 
     const newDap = await this.db
       .selectFrom('dap')

@@ -57,7 +57,7 @@ export class PostgreSqlUserRepository implements UserRepository {
           document_number: profile.documentNumber,
         })
         .executeTakeFirstOrThrow();
-      console.log(profileResult);
+      //console.log(profileResult);
     }
 
     if (address) {
@@ -72,7 +72,7 @@ export class PostgreSqlUserRepository implements UserRepository {
           commune_id: address.communeId,
         })
         .executeTakeFirstOrThrow();
-      console.log(addressResult);
+      //console.log(addressResult);
     }
 
     return userClient;

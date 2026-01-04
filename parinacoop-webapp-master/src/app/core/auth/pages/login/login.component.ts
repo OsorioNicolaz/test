@@ -62,12 +62,11 @@ export default class LoginComponent implements OnInit, OnDestroy {
       password: this.loginForm.value.password!,
     };
 
-    console.log('RUN que se está enviando:', credentials.run);
 
     this.loginErrorMsg = '';
     this.loginService.login(credentials).subscribe({
       next: (response) => {
-        console.log(response.accessToken);
+        
         response.isClient
           ? this.router.navigate([ROUTE_TOKENS.CLIENT_PATH])
           : this.router.navigate([ROUTE_TOKENS.ADMIN_PATH]);

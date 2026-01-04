@@ -65,4 +65,9 @@ export class AuthService {
   agregarDireccion(data: any) {
     return this.httpClient.post('usuarios/direccion', data);
   }
+
+  get run(): number | undefined {
+    return this.currentUser?.run;
+    
+  }
 }

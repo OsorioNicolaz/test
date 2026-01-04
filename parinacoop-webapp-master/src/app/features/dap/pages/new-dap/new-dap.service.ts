@@ -17,7 +17,7 @@ export class NewDapService {
   ) {}
 
   getTermOptions(type: string, initialAmount: number): void {
-    console.log(initialAmount);
+    //console.log(initialAmount);
 
     this.httpClient
       .post<{ sDaps: TermOption[] }>('dap/simulate', { type, initialAmount }).pipe(delay(500))

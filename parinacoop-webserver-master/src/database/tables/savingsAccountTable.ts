@@ -11,11 +11,12 @@ export interface SavingsAccountTable {
   remaining_withdrawals: number | null;
   birth_date: Date | null;
   sex: string | null;
-  department: string | null;
+  department: number | null;
   block_condo: string | null;
   city: string | null;
   nationality: string | null;
   education: string | null;
   occupation: string | null;
   marital_status: string | null;
+  status: 'pendiente' | 'creada' | 'rechazada';
 }

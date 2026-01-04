@@ -11,9 +11,24 @@ import { DapModule } from './contexts/dap/infrastructure/dap.module';
 import { ConfigModule } from './config/config.module';
 import { AdminModule } from './contexts/admin/infrastructure/admin.module';
 import { CuentaAhorroModule } from './contexts/cuenta-ahorro/infrastructure/cuenta-ahorro.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',  // Gmail: smtp.gmail.com (requiere configuración de App Password)
+        port: 587,
+        secure: false,                 // true para 465, false para 587
+        auth: {
+          user: 'nicolas.osorio.aravena@alumnos.uta.cl',
+          pass: 'xkkmajhovxukyjmq', // Usa una App Password si tienes 2FA habilitado
+        },
+      },
+      defaults: {
+        from: '"No-Reply" <nicolas.osorio.aravena@alumnos.uta.cl>',
+      },
+    }),
     ConfigModule,
     DatabaseModule.forRootAsync({
       inject: [ConfigService],

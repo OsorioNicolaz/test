@@ -22,6 +22,7 @@ import { dialectGenerator } from './dialect-generator';
           user: databaseOptions.user,
           password: databaseOptions.password,
         });
+        
 
         return new Database({
           dialect,
