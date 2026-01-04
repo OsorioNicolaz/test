@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SavingsAccount } from '../../../models/cuenta-ahorro.model';
 
 
 export interface SolicitudCuentaAhorroPayload {
@@ -25,4 +26,9 @@ export class SolicitudService {
   enviarSolicitud(datos: SolicitudCuentaAhorroPayload) {
     return this.http.post('savings-account', datos);
   }
+
+  getUltimaCuentaAhorro() {
+  return this.http.get<any>('savings-account/last');
+}
+
 }

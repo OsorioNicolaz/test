@@ -35,7 +35,7 @@ export class NewCuentaAhorroService {
       .where('user_run', '=', userRun)
       .executeTakeFirst();
 
-    // b) Dirección y comuna (usa la primera o principal, según tu modelo)
+    // b) Dirección y comuna
     const address = await this.db
       .selectFrom('address')
       .innerJoin('commune', 'address.commune_id', 'commune.id')
@@ -46,31 +46,38 @@ export class NewCuentaAhorroService {
       ])
       .where('address.user_run', '=', userRun)
       .executeTakeFirst();
+    // 2. muestra no informado si no pone algun dato opcional
+      const showValue = (val: any, fallback = 'No informado') =>
+        val === undefined || val === null || val === '' ? fallback : val;
     
-    // 2. Armar correo
+    // 3. Armar correo
     const mailBody = `
       Nueva solicitud recibida desde la web:
-      RUN: ${dto.user_run}
-      Nombre completo: ${profile?.names ?? ''} ${profile?.first_last_name ?? ''} ${profile?.second_last_name ?? ''}
-      Teléfono: ${profile?.cellphone ?? ''}
-      Email: ${profile?.email ?? ''}
-      Dirección: ${address?.street ?? ''} #${address?.number ?? ''}, ${address?.commune_name ?? ''}
 
       Monto inicial: ${dto.initial_amount}
+      RUN: ${dto.user_run}
+      Nombre completo: ${profile?.names ?? ''} ${profile?.first_last_name ?? ''} ${profile?.second_last_name ?? ''}
+      Fecha de nacimiento: ${new Date(dto.birth_date).toLocaleDateString('es-CL', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      })}
       Sexo: ${dto.sex}
+      Dirección: ${address?.street ?? ''} #${address?.number ?? ''}
+      Departamento: ${showValue(dto.department)}
+      Block/condominio: ${showValue(dto.block_condo)}
       Ciudad: ${dto.city}
+      Comuna: ${address?.commune_name ?? ''}
       Nacionalidad: ${dto.nationality}
-      Educación: ${dto.education}
+      Estudios: ${dto.education}
       Ocupación: ${dto.occupation}
+      Teléfono: ${profile?.cellphone ?? ''}
       Estado civil: ${dto.marital_status}
-      Departamento: ${dto.department}
-      Block/condominio: ${dto.block_condo}
-      Fecha de nacimiento: ${dto.birth_date}
-      Otros...
+      Email: ${profile?.email ?? ''}
         `.trim();
     
     await this.mailerService.sendMail({
-      to: 'nicolas.osorio.aravena@alumnos.uta.cl', // Cambia al correo real destino
+      to: 'nicolas.osorio.aravena@alumnos.uta.cl', // Correo a donde va a llegar la información
       subject: 'Nueva solicitud de apertura de cuenta de ahorro',
       text: mailBody,
     });

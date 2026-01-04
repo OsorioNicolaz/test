@@ -1,5 +1,7 @@
 import { IsNumber, IsString, IsOptional, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
+
 
 export class CrearCuentaAhorroDto {
   @IsNumber()
@@ -16,7 +18,8 @@ export class CrearCuentaAhorroDto {
   sex!: string;
 
   @IsOptional()
-  @IsString()
+  @Transform(({ value }) => value === '' ? undefined : value)
+  @IsNumber()
   department?: number;
 
   @IsOptional()
