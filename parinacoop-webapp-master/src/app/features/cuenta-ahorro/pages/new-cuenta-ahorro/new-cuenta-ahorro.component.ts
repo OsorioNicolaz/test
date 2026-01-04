@@ -17,6 +17,7 @@ import { AuthService } from '@app/core/auth/services/auth.service';
 })
 export class NewCuentaAhorroComponent implements OnInit {
   form!: FormGroup;
+  mensajeExito = '';
 
    constructor(
     private router: Router, 
@@ -56,8 +57,17 @@ export class NewCuentaAhorroComponent implements OnInit {
         user_run: run
       };
       this.solicitudService.enviarSolicitud(data).subscribe(
-        () => alert('Solicitud enviada!'),
-        error => alert('Hubo un error al enviar la solicitud.')
+        () => {
+          this.mensajeExito = 'Solicitud enviada correctamente.';
+          setTimeout(() => {
+            this.mensajeExito = '';
+            this.volver();
+          }, 2000);
+        },
+        error => {
+          this.mensajeExito = 'Hubo un error al enviar la solicitud.';
+          setTimeout(() => this.mensajeExito = '', 2500);
+        }
       );
     }
   }
