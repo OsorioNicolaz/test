@@ -17,6 +17,7 @@ export interface PrimitiveSavingsAccount {
   education: string | null;
   occupation: string | null;
   maritalStatus: string | null;
+  status: string;
 }
 
 export class SavingsAccount {

@@ -17,4 +17,5 @@ export class SavingsAccount {
   education!: string | null;
   occupation!: string | null;
   maritalStatus!: string | null;
+  status!: string;
 }

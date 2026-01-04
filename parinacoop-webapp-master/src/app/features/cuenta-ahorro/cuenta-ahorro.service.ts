@@ -40,6 +40,7 @@ export class CuentaAhorroService {
         education: row.education,
         occupation: row.occupation,
         maritalStatus: row.marital_status,
+        status: row.status,
       }))
       this.accountsSubject.next(mappedCuentas);
     },

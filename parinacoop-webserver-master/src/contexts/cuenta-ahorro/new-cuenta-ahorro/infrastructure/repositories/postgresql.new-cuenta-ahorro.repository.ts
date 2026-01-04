@@ -4,7 +4,6 @@ import { NewCuentaAhorroRepository } from '../../domain/ports/new-cuenta-ahorro.
 import { CrearCuentaAhorroDto } from '../../domain/new-cuenta-ahorro.entity';
 import { Insertable } from 'kysely';
 import { SavingsAccountTable } from '@/database/tables/savingsAccountTable';
-import { SavingsAccount } from '../../../domain/models/CuentaAhorro';
 
 @Injectable()
 export class PostgreSqlNewCuentaAhorroRepository implements NewCuentaAhorroRepository {
@@ -39,15 +38,5 @@ export class PostgreSqlNewCuentaAhorroRepository implements NewCuentaAhorroRepos
       .returningAll() 
       .execute();
     return result[0]; // Devuelve la cuenta creada
-  }
-  
-  async getLastByUserRun(userRun: number): Promise<SavingsAccountTable | null> {
-    const result = await this.db
-      .selectFrom('savings_account')
-      .selectAll()
-      .where('user_run', '=', userRun)
-      .orderBy('created_at', 'desc')
-      .executeTakeFirst();
-    return result ?? null;
   }
 }

@@ -19,9 +19,19 @@ import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
         <div class="font-bold">Monto inicial</div>
         <div>{{ account.initialAmount | currency:'CLP':'symbol' }}</div>
       </div>
-      <div class="flex-1 flex flex-col items-center">
+      <div>
         <div class="font-bold">Fecha apertura</div>
-        <div>{{ account.initialDate | date:'dd-MM-yyyy' }}</div>
+          <div>
+            {{ account.initialDate ? (account.initialDate | date:'dd-MM-yyyy') : 'Aún no aceptada' }}
+          </div>
+      </div>
+      <div class="flex-1 flex flex-col items-center">
+        <div class="font-bold">Retiros restantes</div>
+        <div>{{ account.remainingWithdrawals }}</div>
+      </div>
+      <div class="flex-1 flex flex-col items-center">
+        <div class="font-bold">Estado de la cuenta</div>
+        <div>{{ account.status }}</div>
       </div>
     </div>
   `

@@ -42,24 +42,6 @@ export class NewCuentaAhorroComponent implements OnInit {
       occupation: ['', Validators.required],
       marital_status: ['', Validators.required]
     });
-
-  //Autocompletado: pide los datos al backend y los pone en el form
-    this.solicitudService.getUltimaCuentaAhorro().subscribe((datosApi) => {
-      if (datosApi) {
-        this.form.patchValue({
-          initial_amount: datosApi.initial_amount,
-          birth_date: datosApi.birth_date ? datosApi.birth_date.substring(0, 10) : '',
-          sex: datosApi.sex ?? '',
-          department: datosApi.department ?? '',
-          block_condo: datosApi.block_condo ?? '',
-          city: datosApi.city ?? '',
-          nationality: datosApi.nationality ?? '',
-          education: datosApi.education ?? '',
-          occupation: datosApi.occupation ?? '',
-          marital_status: datosApi.marital_status ?? ''
-        });
-      }
-    });
   }
 
   submit() {

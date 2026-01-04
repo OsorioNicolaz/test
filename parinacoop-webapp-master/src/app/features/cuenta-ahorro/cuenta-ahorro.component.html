@@ -33,6 +33,10 @@
   </button>
 @let savingAccounts = savingAccounts$ | async;
 @let perfil = perfil$ | async;
+@for (account of savingAccounts; track account.id) {
+  <pre>{{ account | json }}</pre>
+  <app-saving-item [account]="account"/>
+}
 
 <section class="flex flex-col items-center gap-5 pt-5">
   
