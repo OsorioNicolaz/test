@@ -49,6 +49,8 @@ DB_PORT=5432                   # Puerto de la base de datos
 DB_USER=postgres
 DB_PASSWORD=tu_contraseña      # Contraseña de la base de datos
 DB_NAME=nombre_de_tu_base      # Nombre de la base de datos
+```
+
 
 ## Compile and run the project
 
