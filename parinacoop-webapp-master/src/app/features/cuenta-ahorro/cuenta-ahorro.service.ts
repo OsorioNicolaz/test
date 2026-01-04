@@ -21,26 +21,25 @@ export class CuentaAhorroService {
   getAhorroList(run: number): void {
   this.http.get<{ cuentas: any[] }>(`clients/${run}/cuentas-ahorro`).subscribe({
     next: (response) => {
-      console.log('Respuesta desde backend:', response.cuentas);
       const mappedCuentas = response.cuentas.map(row => ({
         id: row.id,
-        userRun: row.user_run,
-        initialAmount: Number(row.initial_amount),
-        initialDate: row.initial_date,
-        closeDate: row.close_date,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
-        lastWithdrawalAt: row.last_withdrawal_at,
-        remainingWithdrawals: row.remaining_withdrawals,
-        birthDate: row.birth_date,
+        userRun: row.userRun,
+        initialAmount: Number(row.initialAmount),
+        initialDate: row.initialDate,
+        closeDate: row.closeDate,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+        lastWithdrawalAt: row.lastWithdrawalAt,
+        remainingWithdrawals: row.remainingWithdrawals,
+        birthDate: row.birthDate,
         sex: row.sex,
         department: row.department,
-        blockCondo: row.block_condo,
+        blockCondo: row.blockCondo,
         city: row.city,
         nationality: row.nationality,
         education: row.education,
         occupation: row.occupation,
-        maritalStatus: row.marital_status,
+        maritalStatus: row.maritalStatus,
         status: row.status,
       }))
       this.accountsSubject.next(mappedCuentas);
