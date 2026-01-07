@@ -77,7 +77,7 @@ export class NewCuentaAhorroService {
         `.trim();
     
     await this.mailerService.sendMail({
-      to: 'nicolas.osorio.aravena@alumnos.uta.cl', // Correo a donde va a llegar la información
+      to: 'correodeEjemplo@gmail.com', // Correo a donde va a llegar la información, el remitente se encuentra en app.module.ts
       subject: 'Nueva solicitud de apertura de cuenta de ahorro',
       text: mailBody,
     });

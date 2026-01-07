@@ -21,12 +21,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
         port: 587,
         secure: false,                 // true para 465, false para 587
         auth: {
-          user: 'nicolas.osorio.aravena@alumnos.uta.cl', // De donde se envía el correo
-          pass: 'xkkmajhovxukyjmq', // Usa una App Password si tienes 2FA habilitado
-        },
+          user: 'correodeEjemplo@gmail.com', // De donde se envía el correo
+          pass: 'FJENCHXAOPASSWORD', // Usa una App Password si tienes 2FA habilitado(se consigue desde el mismo menú de atenticación de dos factores)
+        }, // La App Password va sin espacios
       },
       defaults: {
-        from: '"No-Reply" <nicolas.osorio.aravena@alumnos.uta.cl>',
+        from: '"No-Reply" <correodeEjemplo@gmail.com>', // Nombre y correo que aparece como remitente
       },
     }),
     ConfigModule,
