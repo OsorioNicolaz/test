@@ -15,6 +15,7 @@
       Crear una cuenta de ahorro
     </button>
     <button
+      *ngIf="contratoAceptado"
       class="w-80 py-6 text-xl font-semibold rounded-full bg-green-500 text-white shadow-lg transition hover:bg-green-600 active:bg-green-700"
       [routerLink]="[ROUTE_TOKENS.NEW_CUENTA_AHORRO]"
       type="button"
