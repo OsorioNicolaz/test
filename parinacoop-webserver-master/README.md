@@ -31,18 +31,41 @@
 ```bash
 $ pnpm install
 ```
+## Environment Variables
+
+Before running the project, create a file named `.env.development.local` in the root of your repository with the following content (and adjust the values according to your environment):
+
+```env
+# APP
+PORT=3000
+
+# JWT
+JWT_SECRET=mysupersecretkey     # Clave secreta
+JWT_EXPIRES_IN=1d              # Tiempo de vida de la clave
+
+# DATABASE (POSTGRES)
+DB_HOST=localhost               # IP/Host de la base de datos
+DB_PORT=5432                   # Puerto de la base de datos
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña      # Contraseña de la base de datos
+DB_NAME=nombre_de_tu_base      # Nombre de la base de datos
+```
+## Migration
+
+Before running the project, yout need to migrate the database for that you need to do:
+
+```bash
+# to migrate the database
+$ pnpm run migrate
+```
+
 
 ## Compile and run the project
 
 ```bash
 # development
-$ pnpm run start
+$ pnpm run dev
 
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
 ```
 
 ## Run tests
